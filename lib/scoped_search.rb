@@ -103,8 +103,8 @@ class ScopedSearch
       def scoped_order(*columns_names)
         if defined?(Mongoid) && self.include?(Mongoid::Document)
           columns_names.each do |column_name|
-            scope :"ascend_by_#{column_name}",  order_by([column_name.to_sym, :asc])
-            scope :"descend_by_#{column_name}", order_by([column_name.to_sym, :desc])
+            scope :"ascend_by_#{column_name}",  ->{ asc(column_name.to_sym) }
+            scope :"descend_by_#{column_name}", ->{ desc(column_name.to_sym) }
           end
         else
           columns_names.each do |column_name|
